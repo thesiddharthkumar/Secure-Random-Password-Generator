@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="style.css">
+    <title>SecureGen Pro</title>
+</head>
+<body>
+    <div class="loader-wrapper" id="loader">
+        <div class="spinner-box">
+            <div class="pulse-ring"><i class="bi bi-shield-shaded"></i></div>
+        </div>
+    </div>
+   
+    <main>
+        <div class="container">
+            <div class="card-header">
+                <div class="brand">
+                    <div class="logo">
+                        <i class="bi bi-shield-shaded"></i> 
+                        <span>SecureGen</span>
+                        <div class="status-badge">PRO</div>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button id="securityBtn" class="icon-btn" title="Audit">
+                        <i class="bi bi-shield-check"></i>
+                    </button>
+                    <button id="historyBtn" class="icon-btn" title="History">
+                        <i class="bi bi-clock-history"></i>
+                    </button>
+                    <button id="themeToggle" class="icon-btn" title="Theme">
+                        <i class="bi bi-moon-stars-fill" id="themeIcon"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="card-body">
+                
+                <div class="display-section">
+                    <div class="display-container">
+                        <input type="text" id="password" readonly placeholder="Generating..." spellcheck="false">
+                        <div class="display-actions">
+                            <button class="action-btn" id="visibilityBtn" title="Toggle Visibility">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                            <button class="action-btn" id="copyBtn" title="Copy">
+                                <i class="bi bi-copy"></i>
+                            </button>
+                        
+                        </div>
+                    </div>
+                    
+                    <div class="strength-wrapper">
+                        <div class="strength-meta">
+                            <span id="strengthLabel">Weak</span>
+                            <span id="entropyText">0 bits</span>
+                        </div>
+                        <div class="strength-bar-bg">
+                            <div id="strengthBar" class="strength-bar-fill"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="additional-stats">
+                        <span id="patternWarning" class="stat-pill warning hidden"><i class="bi bi-exclamation-triangle-fill"></i> Pattern</span>
+                        <span id="specialChars" class="stat-pill">0 special</span>
+                        <span id="passwordAge" class="stat-pill">Just now</span>
+                    </div>
+                </div>
+
+                <div class="controls-area">
+                    <div class="range-group">
+                        <div class="range-header">
+                            <label>Length</label>
+                            <div class="range-value-display" id="lengthValue">16</div>
+                        </div>
+                        <input type="range" id="lengthRange" min="6" max="64" value="16">
+                    </div>
+
+                    <div class="options-grid">
+                        <label class="option-chip">
+                            <input type="checkbox" id="uppercase" checked>
+                            <span>ABC</span>
+                        </label>
+                        <label class="option-chip">
+                            <input type="checkbox" id="lowercase" checked>
+                            <span>abc</span>
+                        </label>
+                        <label class="option-chip">
+                            <input type="checkbox" id="numbers" checked>
+                            <span>123</span>
+                        </label>
+                        <label class="option-chip">
+                            <input type="checkbox" id="symbols">
+                            <span>#$&</span>
+                        </label>
+                        <label class="option-chip">
+                            <input type="checkbox" id="avoidAmbiguous" checked>
+                            <span>No Ambig</span>
+                        </label>
+                        <label class="option-chip">
+                            <input type="checkbox" id="excludeSimilar">
+                            <span>No Sim</span>
+                        </label>
+                    </div>
+
+                    <div class="advanced-wrapper">
+                        <div class="advanced-row">
+                            <label for="passwordExpiry"><i class="bi bi-hourglass-split"></i> Auto-refresh</label>
+                            <select id="passwordExpiry" class="select-styled">
+                                <option value="0">Never</option>
+                                <option value="30">30s</option>
+                                <option value="60">1m</option>
+                                <option value="300">5m</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button id="generateMainBtn" class="generate-btn-lg">
+                        <i class="bi bi-magic"></i> Generate Secure Key
+                    </button>
+                    <button id="phishingCheckBtn" class="secondary-btn">
+                        <i class="bi bi-shield-check"></i> Security Audit
+                    </button>
+                </div>
+            </div>
+
+            <div class="security-modal" id="securityModal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Security Audit</h3>
+                        <button class="close-btn" id="closeSecurity">&times;</button>
+                    </div>
+                    <div class="modal-body" id="securityReport">
+                        </div>
+                </div>
+            </div>
+
+            <div class="history-drawer" id="historyDrawer">
+                <div class="modal-header">
+                    <h3>Recent Keys</h3>
+                    <div class="header-actions">
+                        <button id="exportHistoryBtn" class="icon-btn"><i class="bi bi-download"></i></button>
+                        <button id="deleteHistoryBtn" class="icon-btn"><i class="bi bi-trash"></i></button>
+                        <button id="closeHistory" class="icon-btn"><i class="bi bi-x-lg"></i></button>
+                    </div>
+                </div>
+                <div class="history-list" id="historyList">
+                    <div class="empty-state" style="text-align: center; color: var(--text-tertiary); margin-top: 2rem;">No history yet</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="notification hidden" id="notification">
+            <i class="bi bi-check-circle-fill"></i>
+            <span id="notif-text"></span>
+        </div>
+    </main>
+<script src="script.js"></script>
+</body>
+</html>
